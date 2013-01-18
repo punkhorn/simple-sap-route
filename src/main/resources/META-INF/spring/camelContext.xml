@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+  <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
+    <route>
+        <from uri="file:src/data?noop=true"/>
+        <to uri="sap:BAPI_FLCUST_GETLIST"/>
+        <to uri="file:target/messages"/>
+    </route>
+</camelContext>
+
+<bean id="sap" class="org.apache.camel.component.sap.SAPComponent">
+	<property name="ashost" value="nplhost"/>
+	<property name="sysnr" value="42"/>
+	<property name="client" value="001"/>
+	<property name="user" value="developer"/>
+	<property name="passwd" value="ch4ngeme"/>
+	<property name="lang" value="en"/>
+</bean>
+
+</beans>
